@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,9 +57,27 @@ public class EstudianteController {
         return "estudiantes/form";
     }
 
+    @GetMapping("/editar/{id}")
+    public String editarForm(@PathVariable Long id, Model model) {
+        Estudiante estudiante = estudianteService.buscarOpcionalPorId(id).orElse(null);
+        if (estudiante == null) {
+            return "redirect:/estudiantes";
+        }
+
+        model.addAttribute("estudiante", estudiante);
+        model.addAttribute("cursos", cursoService.listarTodos());
+        return "estudiantes/form";
+    }
+
     @PostMapping
     public String guardar(@ModelAttribute Estudiante estudiante, @RequestParam(value = "cursoId", required = false) Long cursoId) {
         estudianteService.guardar(estudiante, cursoId);
+        return "redirect:/estudiantes";
+    }
+
+    @PostMapping("/eliminar/{id}")
+    public String eliminar(@PathVariable Long id) {
+        estudianteService.eliminar(id);
         return "redirect:/estudiantes";
     }
 }

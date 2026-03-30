@@ -50,16 +50,26 @@
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>Descripcion</th>
+                        <th>Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:if="${#lists.isEmpty(cursos)}">
-                        <td colspan="3" class="text-center text-secondary">No hay cursos registrados.</td>
+                        <td colspan="4" class="text-center text-secondary">No hay cursos registrados.</td>
                     </tr>
                     <tr th:each="curso : ${cursos}">
                         <td th:text="${curso.id}">1</td>
                         <td class="fw-semibold" th:text="${curso.nombre}">Curso</td>
                         <td th:text="${curso.descripcion}">Descripcion</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a th:href="@{/cursos/editar/{id}(id=${curso.id})}" class="btn btn-sm btn-outline-primary">Editar</a>
+                                <form th:action="@{/cursos/eliminar/{id}(id=${curso.id})}" method="post">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                                </form>
+                            </div>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

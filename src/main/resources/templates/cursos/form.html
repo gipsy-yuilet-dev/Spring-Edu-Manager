@@ -24,16 +24,17 @@
             <div class="card form-shell">
                 <div class="card-body p-4 p-md-5">
                     <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
-                        <h1 class="h3 fw-bold mb-0">Crear Nuevo Curso</h1>
+                        <h1 class="h3 fw-bold mb-0" th:text="${curso.id != null ? 'Editar Curso' : 'Crear Nuevo Curso'}">Crear Nuevo Curso</h1>
                         <form th:action="@{/logout}" method="post" class="d-inline">
                             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
                             <button type="submit" class="btn btn-danger">Cerrar sesion</button>
                         </form>
                     </div>
-                    <p class="text-secondary">Solo usuarios con rol ADMIN pueden crear cursos.</p>
+                    <p class="text-secondary" th:text="${curso.id != null ? 'Actualiza los datos del curso y guarda los cambios.' : 'Solo usuarios con rol ADMIN pueden crear cursos.'}">Solo usuarios con rol ADMIN pueden crear cursos.</p>
 
                     <form th:action="@{/cursos}" method="post" th:object="${curso}">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <input type="hidden" th:field="*{id}">
 
                         <div class="mb-3">
                             <label for="nombre" class="form-label fw-semibold">Nombre</label>
