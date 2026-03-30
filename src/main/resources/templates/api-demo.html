@@ -32,6 +32,7 @@
                 <p class="text-secondary mb-0">Esta pantalla usa fetch para consumir tus endpoints JSON autenticados con la sesion activa.</p>
             </div>
             <div class="d-flex flex-wrap gap-2">
+                <a th:href="@{/}" class="btn btn-outline-dark">Inicio</a>
                 <a th:href="@{/estudiantes}" class="btn btn-dark">Volver a estudiantes</a>
                 <a href="/swagger-ui/index.html" target="_blank" class="btn btn-outline-primary">Abrir Swagger</a>
                 <form th:action="@{/logout}" method="post" class="d-inline">
