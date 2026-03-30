@@ -3,6 +3,8 @@ package com.springedumanager.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.springedumanager.model.Curso;
@@ -31,6 +33,16 @@ public class EstudianteService {
      */
     public List<Estudiante> listarTodos() {
         return estudianteRepository.findAll();
+    }
+
+    /**
+     * Obtiene estudiantes paginados para vistas de listado.
+     *
+     * @param pageable configuracion de pagina y tamanio
+     * @return pagina de estudiantes
+     */
+    public Page<Estudiante> listarPaginado(Pageable pageable) {
+        return estudianteRepository.findAll(pageable);
     }
 
     public long contar() {

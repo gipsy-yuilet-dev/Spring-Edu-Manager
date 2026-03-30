@@ -34,6 +34,10 @@
             <div class="d-flex flex-wrap gap-2">
                 <a th:href="@{/estudiantes}" class="btn btn-dark">Volver a estudiantes</a>
                 <a href="/swagger-ui/index.html" target="_blank" class="btn btn-outline-primary">Abrir Swagger</a>
+                <form th:action="@{/logout}" method="post" class="d-inline">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <button type="submit" class="btn btn-danger">Cerrar sesion</button>
+                </form>
             </div>
         </div>
 

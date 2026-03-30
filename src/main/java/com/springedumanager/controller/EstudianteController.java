@@ -1,5 +1,7 @@
 package com.springedumanager.controller;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +30,22 @@ public class EstudianteController {
     }
 
     @GetMapping
-    public String listar(Model model) {
-        model.addAttribute("estudiantes", estudianteService.listarTodos());
+    public String listar(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            Model model
+    ) {
+        int safePage = Math.max(page, 0);
+        int safeSize = Math.max(size, 1);
+
+        Page<Estudiante> estudiantesPage = estudianteService.listarPaginado(PageRequest.of(safePage, safeSize));
+
+        model.addAttribute("estudiantes", estudiantesPage.getContent());
+        model.addAttribute("currentPage", safePage);
+        model.addAttribute("pageSize", safeSize);
+        model.addAttribute("totalPages", estudiantesPage.getTotalPages());
+        model.addAttribute("hasPrevious", estudiantesPage.hasPrevious());
+        model.addAttribute("hasNext", estudiantesPage.hasNext());
         return "estudiantes/lista";
     }
 
