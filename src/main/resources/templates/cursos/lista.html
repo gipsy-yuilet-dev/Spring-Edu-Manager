@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cursos | Spring Edu Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --brand-a: #ff7a18;
+            --brand-b: #00c6ff;
+            --ink: #132238;
+        }
+        body {
+            background: linear-gradient(135deg, rgba(255, 122, 24, 0.2), rgba(0, 198, 255, 0.2));
+            min-height: 100vh;
+            color: var(--ink);
+        }
+        .hero-card {
+            border: 0;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(19, 34, 56, 0.15);
+        }
+    </style>
+</head>
+<body class="py-4">
+<div class="container">
+    <div class="card hero-card">
+        <div class="card-body p-4 p-md-5">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+                <div>
+                    <h1 class="h2 fw-bold mb-1">Catalogo de Cursos</h1>
+                    <p class="text-secondary mb-0">Gestiona los cursos disponibles en la plataforma.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a th:href="@{/cursos/nuevo}" class="btn btn-warning fw-semibold">Nuevo curso</a>
+                    <a th:href="@{/estudiantes}" class="btn btn-info text-white fw-semibold">Ver estudiantes</a>
+                    <a th:href="@{/interoperabilidad}" class="btn btn-success fw-semibold">Demo API Frontend</a>
+                    <form th:action="@{/logout}" method="post" class="d-inline">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        <button type="submit" class="btn btn-dark">Salir</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle mb-0">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Descripcion</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${#lists.isEmpty(cursos)}">
+                        <td colspan="3" class="text-center text-secondary">No hay cursos registrados.</td>
+                    </tr>
+                    <tr th:each="curso : ${cursos}">
+                        <td th:text="${curso.id}">1</td>
+                        <td class="fw-semibold" th:text="${curso.nombre}">Curso</td>
+                        <td th:text="${curso.descripcion}">Descripcion</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
